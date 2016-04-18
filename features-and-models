@@ -1,0 +1,233 @@
+import numpy as np
+import pandas as pd
+from pandas import Series,DataFrame
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.linear_model import SGDClassifier
+from sklearn.grid_search import GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import classification_report
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.naive_bayes import BernoulliNB
+from sklearn.svm import LinearSVC
+from sklearn.svm import NuSVC
+
+train = pd.read_excel('o_train.xls')
+test = pd.read_excel('o_test.xls')
+train_x = train.x.as_matrix()
+train_y = train.y.as_matrix()
+test_x = test.x.as_matrix()
+test_y = test.y.as_matrix()
+
+
+
+# multinomialNB; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', MultinomialNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.732
+
+# multinomialNB; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', MultinomialNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.738
+
+# multinomialNB; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', MultinomialNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.742
+
+# multinomialNB; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', MultinomialNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.748
+
+#######
+
+# bernoulliNB; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', BernoulliNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.738
+
+# bernoulliNB; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', BernoulliNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.738
+
+# bernoulliNB; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', BernoulliNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.741
+
+# bernoulliNB; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', BernoulliNB()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.743
+
+#######
+
+# LinearSVC; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', LinearSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.683
+
+# LinearSVC; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', LinearSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.708
+
+# LinearSVC; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', LinearSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.706
+
+# LinearSVC; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', LinearSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.730
+
+#######
+
+# NuSVC; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', NuSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.709
+
+# NuSVC; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', NuSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.705
+
+# NuSVC; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', NuSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.720
+
+# NuSVC; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', NuSVC()),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.707
+
+#######
+
+#SGD with hinge loss; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', SGDClassifier(loss='hinge',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.698
+
+#SGD with hinge loss; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', SGDClassifier(loss='hinge',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.735
+
+#SGD with hinge loss; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', SGDClassifier(loss='hinge',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.720
+
+#SGD with hinge loss; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', SGDClassifier(loss='hinge',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.739
+
+#######
+
+#SGD with log loss; unigram
+text_clf = Pipeline([('vect', CountVectorizer()),('clf', SGDClassifier(loss='log',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.697
+
+#SGD with log loss; unigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer()),('tfidf', TfidfTransformer()),('clf', SGDClassifier(loss='log',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.723
+
+#SGD with log loss; bigram
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('clf', SGDClassifier(loss='log',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.727
+
+#SGD with log loss; bigram-tfidf
+text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),('tfidf', TfidfTransformer()),('clf', SGDClassifier(loss='log',
+alpha=1e-3,random_state=350)),])
+text_clf = text_clf.fit(train_x, train_y)
+docs_test = test_x
+predicted = text_clf.predict(docs_test)
+np.mean(predicted == test_y)
+# 0.735
+
