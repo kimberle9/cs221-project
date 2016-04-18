@@ -1,0 +1,21 @@
+# Function _synonym_names written by TA Isaac
+
+from nltk.corpus import wordnet as wn
+from nltk.corpus import stopwords
+
+# Function for getting synonyms from wordnet
+def _synonym_names(word, excessive, lowercase=True):
+	syns = []
+	if excessive:
+		syns= [name for ss in wn.synsets(word) for name in ss.lemma_names()]
+	else:
+		#Only return the names from the first synset
+		sss = wn.synsets(word)
+		if sss: ss = sss[0];
+		else: return [word]
+		syns = [name for name in ss.lemma_names()]
+
+	if lowercase:
+		syns = [w.lower() for w in syns]
+
+	return syns
